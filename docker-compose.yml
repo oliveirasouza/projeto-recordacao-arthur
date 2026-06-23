@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: arthur-moments-db
+    restart: always
+    environment:
+      POSTGRES_DB: arthur_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d arthur_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: arthur-moments-web
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/arthur_db
+      - AUTH_SECRET=fallback-secret-for-dev-only-change-in-production
+      - ADMIN_PASSWORD=arthur123
+      - AUTH_TRUST_HOST=true
+
+volumes:
+  pgdata:

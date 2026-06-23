@@ -1,0 +1,10 @@
+{
+    "name": "context7",
+    "endpoint": {
+        "url": "https://context7.com/api/v2/context"
+    },
+    "headers": {
+        "Authorization": "${CONTEXT7_API_KEY}",
+        "Accept": "application/json"
+    }
+}
