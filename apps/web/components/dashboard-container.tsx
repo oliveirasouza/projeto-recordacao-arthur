@@ -172,7 +172,7 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
   )
 
   return (
-    <div 
+    <div
       className="min-h-screen flex flex-col relative overflow-hidden font-sans text-neutral-100 bg-cover bg-center bg-fixed"
       style={{ backgroundImage: "url('/stadium_background.png')" }}
     >
@@ -192,8 +192,8 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
           <button
             onClick={() => handleTabChange("inicio")}
             className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all cursor-pointer ${activeTab === "inicio"
-                ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
-                : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
+              ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
+              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
               }`}
           >
             Início
@@ -201,8 +201,8 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
           <button
             onClick={() => handleTabChange("momentos")}
             className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all cursor-pointer ${activeTab === "momentos"
-                ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
-                : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
+              ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
+              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
               }`}
           >
             Momentos
@@ -210,8 +210,8 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
           <button
             onClick={() => handleTabChange("galeria")}
             className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all cursor-pointer ${activeTab === "galeria"
-                ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
-                : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
+              ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
+              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
               }`}
           >
             Galeria de Sonhos
@@ -219,8 +219,8 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
           <button
             onClick={() => handleTabChange("videos")}
             className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all cursor-pointer ${activeTab === "videos"
-                ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
-                : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
+              ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
+              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
               }`}
           >
             Vídeos
@@ -228,8 +228,8 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
           <button
             onClick={() => handleTabChange("contato")}
             className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all cursor-pointer ${activeTab === "contato"
-                ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
-                : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
+              ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
+              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
               }`}
           >
             Contato
@@ -418,11 +418,10 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                             setActiveCategory(cat)
                             setMomentsPage(1)
                           }}
-                          className={`px-4 py-1.5 font-orbitron rounded-lg border text-xs tracking-wide transition-all cursor-pointer ${
-                            activeCategory === cat
-                              ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_10px_rgba(6,182,212,0.3)]"
-                              : "bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white"
-                          }`}
+                          className={`px-4 py-1.5 font-orbitron rounded-lg border text-xs tracking-wide transition-all cursor-pointer ${activeCategory === cat
+                            ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_10px_rgba(6,182,212,0.3)]"
+                            : "bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white"
+                            }`}
                         >
                           {cat}
                         </button>
@@ -460,11 +459,11 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                               size="sm"
                               disabled={momentsPage === 1}
                               onClick={() => setMomentsPage(momentsPage - 1)}
-                              className="h-8 text-xs cursor-pointer rounded-lg border-slate-800 hover:bg-slate-900 text-neutral-300"
+                              className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg cursor-pointer text-xs font-orbitron uppercase tracking-widest shadow-neon-green"
                             >
                               Anterior
                             </Button>
-                            <div className="flex items-center justify-center bg-cyan-950/40 text-cyan-300 h-8 px-3 rounded-lg text-xs font-bold border border-cyan-500/25 font-orbitron">
+                            <div className="flex items-center justify-center bg-amber-950/40 text-amber-300 h-8 px-3 rounded-lg text-xs font-bold border border-amber-500/25 font-orbitron">
                               Página {momentsPage} de {totalMomentsPages}
                             </div>
                             <Button
@@ -472,7 +471,7 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                               size="sm"
                               disabled={momentsPage === totalMomentsPages}
                               onClick={() => setMomentsPage(momentsPage + 1)}
-                              className="h-8 text-xs cursor-pointer rounded-lg border-slate-800 hover:bg-slate-900 text-neutral-300"
+                              className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg cursor-pointer text-xs font-orbitron uppercase tracking-widest shadow-neon-green"
                             >
                               Próxima
                             </Button>
@@ -503,11 +502,10 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                             setActiveDreamCategory(cat)
                             setDreamPage(1)
                           }}
-                          className={`px-4 py-1.5 font-orbitron rounded-lg border text-xs tracking-wide transition-all cursor-pointer ${
-                            activeDreamCategory === cat
-                              ? "bg-amber-500/20 border-amber-400 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.3)]"
-                              : "bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white"
-                          }`}
+                          className={`px-4 py-1.5 font-orbitron rounded-lg border text-xs tracking-wide transition-all cursor-pointer ${activeDreamCategory === cat
+                            ? "bg-amber-500/20 border-amber-400 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.3)]"
+                            : "bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white"
+                            }`}
                         >
                           {cat}
                         </button>
@@ -545,7 +543,8 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                               size="sm"
                               disabled={dreamPage === 1}
                               onClick={() => setDreamPage(dreamPage - 1)}
-                              className="h-8 text-xs cursor-pointer rounded-lg border-slate-800 hover:bg-slate-900 text-neutral-300"
+
+                              className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg cursor-pointer text-xs font-orbitron uppercase tracking-widest shadow-neon-green"
                             >
                               Anterior
                             </Button>
@@ -557,7 +556,8 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                               size="sm"
                               disabled={dreamPage === totalDreamPages}
                               onClick={() => setDreamPage(dreamPage + 1)}
-                              className="h-8 text-xs cursor-pointer rounded-lg border-slate-800 hover:bg-slate-900 text-neutral-300"
+
+                              className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg cursor-pointer text-xs font-orbitron uppercase tracking-widest shadow-neon-green"
                             >
                               Próxima
                             </Button>
@@ -638,9 +638,9 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
             {activeTab === "inicio" && (
               <div className="lg:col-span-1">
                 <div className="sticky top-6">
-                  <UploadForm 
-                    session={session} 
-                    initialMoments={momentsList} 
+                  <UploadForm
+                    session={session}
+                    initialMoments={momentsList}
                     onUploadSuccess={(category) => {
                       if (category === "Momentos") {
                         handleTabChange("momentos")

@@ -65,6 +65,21 @@ export async function uploadMomentAction(prevState: ActionResponse | null, formD
   try {
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
+
+    // Check duplicate
+    const [existingFile] = await db
+      .select({ id: mediaFiles.id })
+      .from(mediaFiles)
+      .where(eq(mediaFiles.data, buffer))
+      .limit(1)
+
+    if (existingFile) {
+      return {
+        success: false,
+        error: `<div class="text-base font-bold text-red-500 font-orbitron uppercase tracking-wider"> Esta mídia já foi adicionada anteriormente. </div>`
+      }
+    }
+
     const fileId = randomUUID()
 
     const [insertedFile] = await db
@@ -156,6 +171,23 @@ export async function editMomentAction(prevState: ActionResponse | null, formDat
     const isVideo = file.type.startsWith("video/") || /\.(mp4|webm|ogg|mov|mkv|avi|flv|wmv|3gp)$/i.test(file.name)
     mediaType = isVideo ? "video" : "image"
     try {
+      const bytes = await file.arrayBuffer()
+      const buffer = Buffer.from(bytes)
+
+      // Check duplicate
+      const [existingFile] = await db
+        .select({ id: mediaFiles.id })
+        .from(mediaFiles)
+        .where(eq(mediaFiles.data, buffer))
+        .limit(1)
+
+      if (existingFile) {
+        return {
+          success: false,
+          error: `<div class="text-base font-bold text-red-500 font-orbitron uppercase tracking-wider"> Esta mídia já foi adicionada anteriormente. </div>`
+        }
+      }
+
       // 1. Delete old file from database if it was a DB media file
       if (oldMoment.mediaUrl.startsWith("/api/media/")) {
         const oldId = oldMoment.mediaUrl.replace("/api/media/", "")
@@ -163,8 +195,6 @@ export async function editMomentAction(prevState: ActionResponse | null, formDat
       }
 
       // 2. Save new file
-      const bytes = await file.arrayBuffer()
-      const buffer = Buffer.from(bytes)
       const fileId = randomUUID()
 
       const [insertedFile] = await db

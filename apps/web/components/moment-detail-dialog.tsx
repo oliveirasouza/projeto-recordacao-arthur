@@ -271,10 +271,14 @@ export function MomentDetailDialog({
             </DialogHeader>
 
             {errorMsg && (
-              <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 animate-bounce" />
-                {errorMsg}
-              </div>
+              errorMsg.startsWith("<div") ? (
+                <div dangerouslySetInnerHTML={{ __html: errorMsg }} />
+              ) : (
+                <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 animate-bounce" />
+                  {errorMsg}
+                </div>
+              )
             )}
 
             {/* Hidden field for ID */}

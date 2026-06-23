@@ -216,9 +216,17 @@ export function UploadForm({ session, initialMoments, onUploadSuccess }: UploadF
       <CardContent className="relative z-10">
         <form id="add-moment-form" onSubmit={handleSubmit} className="space-y-4">
           {(localError || state?.error) && (
-            <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg">
-              {localError || state?.error}
-            </div>
+            localError ? (
+              <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg">
+                {localError}
+              </div>
+            ) : state?.error?.startsWith("<div") ? (
+              <div dangerouslySetInnerHTML={{ __html: state.error }} />
+            ) : (
+              <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg">
+                {state?.error}
+              </div>
+            )
           )}
           {state?.success && !localError && (
             <div className="p-3 text-xs bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-lg">
