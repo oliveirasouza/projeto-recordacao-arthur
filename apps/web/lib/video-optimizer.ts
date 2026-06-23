@@ -90,9 +90,12 @@ export async function startVideoCompressionInBackground(
       // É possível monitorar o progresso decodificando o stderr se necessário
     })
 
-    const exitCode = await new Promise<number>((resolve) => {
+    const exitCode = await new Promise<number>((resolve, reject) => {
       proc.on("close", (code) => {
         resolve(code ?? 0)
+      })
+      proc.on("error", (err) => {
+        reject(err)
       })
     })
 

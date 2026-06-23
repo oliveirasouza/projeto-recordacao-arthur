@@ -58,63 +58,6 @@ async function main() {
       console.log("Admin user already exists.")
     }
 
-    // 3. Seed Moments
-    const sampleMoments = [
-      {
-        title: "Seu Primeiro Golo!",
-        type: "image",
-        mediaUrl: "/first_goal.png",
-        date: new Date("2024-05-13T10:00:00Z"),
-        caption: "A alegria pura! A primeira conquista.",
-        frameId: "soccer",
-        userId: seedUserId,
-        category: "Momentos",
-        dreamCategory: null,
-        duration: null,
-      },
-      {
-        title: "Sonhando Alto",
-        type: "image",
-        mediaUrl: "/dribble_training.png",
-        date: new Date("2024-04-30T14:30:00Z"),
-        caption: "O esforço diário rumo ao topo.",
-        frameId: "gold",
-        userId: seedUserId,
-        category: null,
-        dreamCategory: "Galeria de Sonhos",
-        duration: null,
-      },
-      {
-        title: "Dia de Jogo",
-        type: "image",
-        mediaUrl: "/game_day.png",
-        date: new Date("2024-06-15T09:00:00Z"),
-        caption: "Emoção em campo!",
-        frameId: "polaroid",
-        userId: seedUserId,
-        category: "Momentos",
-        dreamCategory: null,
-        duration: null,
-      },
-      {
-        title: "Golaço de Falta!",
-        type: "video",
-        mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-        date: new Date("2024-06-10T16:00:00Z"),
-        caption: "A bola fez a curva perfeita direto no ângulo!",
-        frameId: "soccer",
-        userId: seedUserId,
-        category: null,
-        dreamCategory: null,
-        duration: "0:15",
-      },
-    ]
-
-    console.log("Clearing and re-inserting sample moments...")
-    await db.delete(schema.moments)
-    for (const moment of sampleMoments) {
-      await db.insert(schema.moments).values(moment)
-    }
 
     console.log("Seeding completed successfully!")
   } catch (error) {
