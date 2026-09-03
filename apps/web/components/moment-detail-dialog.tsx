@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useState, startTransition } from "react"
 import { MomentType } from "@/lib/data-service"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@workspace/ui/components/dialog"
-import { Calendar, Trash2, Edit3, AlertCircle, Loader2 } from "lucide-react"
+import { Calendar, Trash2, Edit3, AlertCircle, Loader2, CheckCircle2 } from "lucide-react"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { Textarea } from "@workspace/ui/components/textarea"
@@ -156,7 +156,7 @@ export function MomentDetailDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[95vw] max-w-[900px] max-h-[90vh] overflow-y-auto bg-slate-950/95 border-2 border-cyan-500/40 text-neutral-100 shadow-2xl p-6 relative left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 fixed">
+      <DialogContent className="w-[95vw] max-w-[900px] max-h-[90vh] overflow-y-auto bg-slate-950/95 border-2 border-cyan-500/40 text-neutral-100 shadow-2xl p-4 sm:p-6 relative left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 fixed">
         <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-xl pointer-events-none" />
         {/* VIEW MODE */}
         {mode === "view" && (
@@ -166,14 +166,14 @@ export function MomentDetailDialog({
                 <Calendar className="w-3.5 h-3.5" />
                 <span>{formattedDate}</span>
               </div>
-              <div className="flex justify-between items-start gap-4 mt-1">
-                <DialogTitle className="text-2xl font-bold text-neutral-100 font-orbitron uppercase tracking-wider">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-4 mt-1">
+                <DialogTitle className="text-lg sm:text-2xl font-bold text-neutral-100 font-orbitron uppercase tracking-wider">
                   {moment.title}
                 </DialogTitle>
 
                 {/* Admin controls */}
                 {session && (
-                  <div className="flex items-center gap-2 mr-6 shrink-0 z-20">
+                  <div className="flex items-center gap-1.5 sm:gap-2 mr-0 sm:mr-6 shrink-0 z-20">
                     <Button
                       variant="outline"
                       size="sm"
@@ -262,7 +262,7 @@ export function MomentDetailDialog({
         )}
 
         {mode === "edit" && (
-          <form onSubmit={handleEditSubmit} className="space-y-4">
+          <form onSubmit={handleEditSubmit} className="space-y-4 animate-in fade-in duration-200">
             <DialogHeader className="pb-4 border-b border-cyan-500/20">
               <DialogTitle className="text-xl font-bold text-cyan-400 font-orbitron uppercase tracking-wider flex items-center gap-1.5">
                 <Edit3 className="w-5 h-5 text-cyan-400" />
@@ -295,7 +295,7 @@ export function MomentDetailDialog({
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
                 <Label htmlFor="edit-date" className="text-xs font-bold text-neutral-300 font-orbitron uppercase tracking-wide">Data</Label>
                 <Input
@@ -406,9 +406,15 @@ export function MomentDetailDialog({
               <Button
                 type="submit"
                 disabled={isPending || isCompressing}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg cursor-pointer text-xs font-orbitron uppercase tracking-widest shadow-neon-green"
+                className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg cursor-pointer text-xs font-orbitron uppercase tracking-widest shadow-neon-green flex items-center gap-1.5 disabled:opacity-70"
               >
-                {isCompressing ? "Otimizando..." : isPending ? "Salvando..." : "Salvar Alterações"}
+                {isCompressing ? (
+                  <><Loader2 className="w-3 h-3 animate-spin" />Otimizando...</>
+                ) : isPending ? (
+                  <><Loader2 className="w-3 h-3 animate-spin" />Salvando...</>
+                ) : (
+                  "Salvar Alterações"
+                )}
               </Button>
             </div>
           </form>
@@ -416,7 +422,7 @@ export function MomentDetailDialog({
 
         {/* CONFIRM DELETE MODE */}
         {mode === "confirm-delete" && (
-          <div className="space-y-4">
+          <div className="space-y-4 animate-in fade-in duration-200">
             <DialogHeader>
               <DialogTitle className="text-xl font-bold text-red-500 font-orbitron uppercase tracking-wider flex items-center gap-1.5">
                 <Trash2 className="w-5 h-5 text-red-500" />
@@ -453,9 +459,13 @@ export function MomentDetailDialog({
                 size="sm"
                 onClick={handleDelete}
                 disabled={isDeleting}
-                className="rounded-lg cursor-pointer text-xs bg-red-650 hover:bg-red-550 text-white font-orbitron uppercase tracking-wider"
+                className="rounded-lg cursor-pointer text-xs bg-red-650 hover:bg-red-550 text-white font-orbitron uppercase tracking-wider flex items-center gap-1.5 disabled:opacity-70"
               >
-                {isDeleting ? "Excluindo..." : "Confirmar Exclusão"}
+                {isDeleting ? (
+                  <><Loader2 className="w-3 h-3 animate-spin" />Excluindo...</>
+                ) : (
+                  "Confirmar Exclusão"
+                )}
               </Button>
             </div>
           </div>
