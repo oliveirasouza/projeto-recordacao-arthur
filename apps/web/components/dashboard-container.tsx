@@ -6,7 +6,7 @@ import { MomentType } from "@/lib/data-service"
 import { MomentCard } from "./moment-card"
 import { MomentDetailDialog } from "./moment-detail-dialog"
 import { UploadForm } from "./upload-form"
-import { Star, Heart, Trophy } from "lucide-react"
+import { Star, Heart, Trophy, Loader2, AlertCircle, Camera, Star as StarIcon, Video, PlusCircle } from "lucide-react"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { Textarea } from "@workspace/ui/components/textarea"
@@ -177,7 +177,7 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
       style={{ backgroundImage: "url('/stadium_background.png')" }}
     >
       {/* HEADER NAVBAR */}
-      <header className="bg-slate-950/80 border-b-2 border-cyan-500/40 backdrop-blur-md text-white py-3 px-6 md:px-12 flex flex-col lg:flex-row items-center justify-between shadow-lg z-10 w-full lg:w-[85%] lg:mx-auto rounded-b-2xl mt-0">
+      <header className="bg-slate-950/80 border-b-2 border-cyan-500/40 backdrop-blur-md text-white py-3 px-4 sm:px-6 md:px-12 flex flex-col lg:flex-row items-center justify-between shadow-lg z-10 w-full lg:w-[85%] lg:mx-auto rounded-b-2xl mt-0">
         <div className="flex flex-col items-center lg:items-start mb-3 lg:mb-0">
           <div className="flex items-center gap-1.5 text-2xl font-black tracking-widest font-orbitron text-cyan-400">
             ARTHUR
@@ -188,48 +188,53 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
         </div>
 
         {/* NAVIGATION LINKS */}
-        <nav className="flex flex-wrap justify-center gap-1.5 md:gap-3 text-xs md:text-sm font-semibold">
+        <nav className="flex flex-wrap justify-center gap-1 sm:gap-1.5 md:gap-3 text-[10px] sm:text-xs font-semibold w-full overflow-x-auto pb-0.5">
           <button
             onClick={() => handleTabChange("inicio")}
-            className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all cursor-pointer ${activeTab === "inicio"
+            aria-current={activeTab === "inicio" ? "page" : undefined}
+            className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all duration-200 cursor-pointer ${activeTab === "inicio"
               ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
-              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
+              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white hover:border-slate-700 hover:bg-slate-900/50"
               }`}
           >
             Início
           </button>
           <button
             onClick={() => handleTabChange("momentos")}
-            className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all cursor-pointer ${activeTab === "momentos"
+            aria-current={activeTab === "momentos" ? "page" : undefined}
+            className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all duration-200 cursor-pointer ${activeTab === "momentos"
               ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
-              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
+              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white hover:border-slate-700 hover:bg-slate-900/50"
               }`}
           >
             Momentos
           </button>
           <button
             onClick={() => handleTabChange("galeria")}
-            className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all cursor-pointer ${activeTab === "galeria"
+            aria-current={activeTab === "galeria" ? "page" : undefined}
+            className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all duration-200 cursor-pointer ${activeTab === "galeria"
               ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
-              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
+              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white hover:border-slate-700 hover:bg-slate-900/50"
               }`}
           >
             Galeria de Sonhos
           </button>
           <button
             onClick={() => handleTabChange("videos")}
-            className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all cursor-pointer ${activeTab === "videos"
+            aria-current={activeTab === "videos" ? "page" : undefined}
+            className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all duration-200 cursor-pointer ${activeTab === "videos"
               ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
-              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
+              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white hover:border-slate-700 hover:bg-slate-900/50"
               }`}
           >
             Vídeos
           </button>
           <button
             onClick={() => handleTabChange("contato")}
-            className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all cursor-pointer ${activeTab === "contato"
+            aria-current={activeTab === "contato" ? "page" : undefined}
+            className={`px-4 py-1.5 font-orbitron rounded-lg border transition-all duration-200 cursor-pointer ${activeTab === "contato"
               ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]"
-              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white"
+              : "bg-slate-950/60 border-slate-900 text-slate-400 hover:text-white hover:border-slate-700 hover:bg-slate-900/50"
               }`}
           >
             Contato
@@ -238,11 +243,11 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
       </header>
 
       {/* MAIN CONTAINER */}
-      <main className="flex-grow w-full lg:w-[85%] lg:mx-auto bg-slate-950/60 backdrop-blur-md px-6 md:px-12 py-8 z-10 shadow-2xl border-x border-slate-900">
+      <main className="flex-grow w-full lg:w-[85%] lg:mx-auto bg-slate-950/60 backdrop-blur-md px-4 sm:px-6 md:px-12 py-8 z-10 shadow-2xl border-x border-slate-900">
 
         {/* HERO BANNER SECTION (Only visible on Home 'inicio') */}
         {activeTab === "inicio" && (
-          <section className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-950 to-slate-900/90 text-white shadow-xl p-8 md:p-10 mb-10 flex flex-col md:flex-row items-center gap-8 justify-between border border-cyan-500/30">
+          <section className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-950 to-slate-900/90 text-white shadow-xl p-5 sm:p-8 md:p-10 mb-10 flex flex-col md:flex-row items-center gap-5 sm:gap-8 justify-between border border-cyan-500/30">
             <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-400/5 rounded-full blur-2xl pointer-events-none" />
             <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-emerald-400/5 rounded-full blur-xl pointer-events-none" />
 
@@ -251,27 +256,39 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                 <Trophy className="w-3.5 h-3.5 text-emerald-400 animate-bounce" />
                 O Futuro Craque
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-neon-green font-orbitron uppercase italic">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-neon-green font-orbitron uppercase italic">
                 Arthur: O Futuro Craque!
               </h1>
-              <h2 className="text-xl md:text-2xl font-bold text-cyan-300 font-orbitron">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-cyan-300 font-orbitron">
                 Onde os Sonhos se Tornam Realidade.
               </h2>
               <p className="text-xs md:text-sm text-neutral-300 leading-relaxed font-medium">
                 Acompanhe a linda jornada do Craque nos campos e na vida. Cada jogada, cada sorriso, uma recordação eterna.
               </p>
+              {momentsList.length > 0 && (
+                <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-1">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-xs font-bold text-cyan-300 font-orbitron">
+                    <Camera className="w-3 h-3" />
+                    {momentsList.filter(m => m.type === "image").length} Fotos
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg text-xs font-bold text-amber-300 font-orbitron">
+                    <Video className="w-3 h-3" />
+                    {momentsList.filter(m => m.type === "video").length} Vídeos
+                  </div>
+                </div>
+              )}
             </div>
 
-            <div className="relative shrink-0 w-56 h-72 rounded-2xl border-2 border-cyan-400 bg-slate-950/90 shadow-[0_0_25px_rgba(6,182,212,0.3)] overflow-hidden p-3 flex flex-col items-center justify-between">
+            <div className="relative shrink-0 w-44 h-56 sm:w-56 sm:h-72 rounded-2xl border-2 border-cyan-400 bg-slate-950/90 shadow-[0_0_25px_rgba(6,182,212,0.3)] overflow-hidden p-3 flex flex-col items-center justify-between">
               {/* FIFA Card Style */}
               <div className="absolute top-2 left-3 text-[10px] font-bold text-cyan-400 font-orbitron uppercase">
                 OVR 99
               </div>
-              <div className="w-full h-[78%] overflow-hidden rounded-xl bg-gradient-to-b from-cyan-950 to-slate-950 border border-slate-800 relative">
+              <div className="w-full h-[75%] mt-5 overflow-hidden rounded-xl bg-gradient-to-b from-cyan-950 to-slate-950 border border-slate-800 relative">
                 <img
                   src="/hero_arthur.png"
                   alt="Arthur"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain object-top hover:scale-110 transition-transform duration-500"
                 />
               </div>
               <div className="text-center w-full">
@@ -289,7 +306,7 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
         {/* DYNAMIC TAB RENDERING */}
         {activeTab === "contato" ? (
           <div className="max-w-xl mx-auto py-6">
-            <div className="bg-slate-900/90 border-2 border-cyan-500/40 shadow-[0_0_25px_rgba(6,182,212,0.15)] rounded-2xl overflow-hidden p-6 md:p-8 relative">
+            <div className="bg-slate-900/90 border-2 border-cyan-500/40 shadow-[0_0_25px_rgba(6,182,212,0.15)] rounded-2xl overflow-hidden p-4 sm:p-6 md:p-8 relative">
               <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-xl pointer-events-none" />
               <div className="text-center pb-6">
                 <span className="text-4xl">📬</span>
@@ -308,8 +325,9 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
               ) : (
                 <form onSubmit={handleContactSubmit} className="space-y-4">
                   {contactError && (
-                    <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg">
-                      {contactError}
+                    <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg flex items-start gap-2" role="alert">
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                      <span>{contactError}</span>
                     </div>
                   )}
                   <div className="space-y-1">
@@ -352,9 +370,13 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                   <Button
                     type="submit"
                     disabled={isSendingContact}
-                    className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-4 rounded-lg shadow-md hover:shadow-lg transition-colors font-orbitron uppercase tracking-wider cursor-pointer"
+                    className="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-4 rounded-lg shadow-md hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all duration-200 font-orbitron uppercase tracking-wider cursor-pointer flex items-center justify-center gap-2 disabled:opacity-70"
                   >
-                    {isSendingContact ? "Enviando..." : "Enviar Mensagem ⚽"}
+                    {isSendingContact ? (
+                      <><Loader2 className="w-4 h-4 animate-spin" />Enviando...</>
+                    ) : (
+                      "Enviar Mensagem ⚽"
+                    )}
                   </Button>
                 </form>
               )}
@@ -367,17 +389,19 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
             <div className={activeTab === "inicio" ? "lg:col-span-2 space-y-10" : "w-full space-y-10"}>
 
               {activeTab === "inicio" && (
-                <div>
+                <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
                   <div className="flex flex-col items-center md:items-start mb-6 pb-2 border-b border-cyan-500/25">
-                    <h2 className="text-2xl font-bold text-neutral-100 font-orbitron flex items-center gap-2 uppercase tracking-wide">
+                    <h2 className="text-xl sm:text-2xl font-bold text-neutral-100 font-orbitron flex items-center gap-2 uppercase tracking-wide">
                       🏆 Nossa Jornada
                     </h2>
                     <p className="text-xs text-neutral-400 mt-1">Recordações e fotos em destaque</p>
                   </div>
 
                   {homePhotos.length === 0 ? (
-                    <div className="text-center py-12 bg-slate-900/80 rounded-xl border border-slate-800">
-                      <p className="text-neutral-400 text-sm">Nenhuma foto cadastrada ainda.</p>
+                    <div className="text-center py-14 bg-slate-900/80 rounded-xl border border-dashed border-slate-700 space-y-3">
+                      <div className="text-4xl">⚽</div>
+                      <p className="text-neutral-200 font-bold font-orbitron text-sm uppercase tracking-wide">Nenhuma recordação ainda</p>
+                      <p className="text-neutral-500 text-xs">Adicione a primeira no painel de upload ao lado →</p>
                     </div>
                   ) : (
                     <>
@@ -389,7 +413,7 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                       <div className="flex justify-center mt-8">
                         <Button
                           onClick={() => handleTabChange("momentos")}
-                          className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center gap-2 font-orbitron uppercase tracking-wider"
+                          className="bg-cyan-500 hover:bg-cyan-400 text-white font-bold px-8 py-3 rounded-xl shadow-md hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all duration-200 cursor-pointer flex items-center gap-2 font-orbitron uppercase tracking-wider"
                         >
                           Ver Mais Recordações ⚽
                         </Button>
@@ -400,9 +424,9 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
               )}
 
               {activeTab === "momentos" && (
-                <div>
+                <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
                   <div className="flex flex-col items-center md:items-start mb-6 pb-2 border-b border-cyan-500/25">
-                    <h2 className="text-2xl font-bold text-neutral-100 font-orbitron flex items-center gap-2 uppercase tracking-wide">
+                    <h2 className="text-xl sm:text-2xl font-bold text-neutral-100 font-orbitron flex items-center gap-2 uppercase tracking-wide">
                       ⚽ Todas as Recordações
                     </h2>
                     <p className="text-xs text-neutral-400 mt-1">Linha do tempo completa (fotos por categoria)</p>
@@ -418,9 +442,9 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                             setActiveCategory(cat)
                             setMomentsPage(1)
                           }}
-                          className={`px-4 py-1.5 font-orbitron rounded-lg border text-xs tracking-wide transition-all cursor-pointer ${activeCategory === cat
+                          className={`px-4 py-1.5 font-orbitron rounded-lg border text-xs tracking-wide transition-all duration-200 cursor-pointer ${activeCategory === cat
                             ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_10px_rgba(6,182,212,0.3)]"
-                            : "bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white"
+                            : "bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 hover:bg-slate-900/40"
                             }`}
                         >
                           {cat}
@@ -430,8 +454,10 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                   )}
 
                   {filteredMomentsPhotos.length === 0 ? (
-                    <div className="text-center py-12 bg-slate-900/80 rounded-xl border border-slate-800">
-                      <p className="text-neutral-400 text-sm">Nenhuma recordação cadastrada nesta categoria.</p>
+                    <div className="text-center py-14 bg-slate-900/80 rounded-xl border border-dashed border-slate-700 space-y-3">
+                      <div className="text-4xl">📸</div>
+                      <p className="text-neutral-200 font-bold font-orbitron text-sm uppercase tracking-wide">Nenhuma recordação aqui</p>
+                      <p className="text-neutral-500 text-xs">Que tal adicionar a primeira foto nesta categoria?</p>
                     </div>
                   ) : (
                     <>
@@ -443,7 +469,7 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
 
                       {/* Paginação */}
                       {totalMomentsPages > 1 && (
-                        <div className="flex items-center justify-between border-t border-slate-900 pt-6 mt-8">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-slate-900 pt-6 mt-8">
                           <p className="text-xs text-neutral-400">
                             Mostrando <span className="font-semibold text-neutral-200">
                               {(momentsPage - 1) * itemsPerPage + 1}
@@ -484,9 +510,9 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
               )}
 
               {activeTab === "galeria" && (
-                <div>
+                <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
                   <div className="flex flex-col items-center md:items-start mb-6 pb-2 border-b border-cyan-500/25">
-                    <h2 className="text-2xl font-bold text-neutral-100 font-orbitron flex items-center gap-2 uppercase tracking-wide">
+                    <h2 className="text-xl sm:text-2xl font-bold text-neutral-100 font-orbitron flex items-center gap-2 uppercase tracking-wide">
                       ⭐ Galeria de Sonhos
                     </h2>
                     <p className="text-xs text-neutral-400 mt-1">Fotos com molduras temáticas selecionadas por categoria</p>
@@ -502,9 +528,9 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                             setActiveDreamCategory(cat)
                             setDreamPage(1)
                           }}
-                          className={`px-4 py-1.5 font-orbitron rounded-lg border text-xs tracking-wide transition-all cursor-pointer ${activeDreamCategory === cat
+                          className={`px-4 py-1.5 font-orbitron rounded-lg border text-xs tracking-wide transition-all duration-200 cursor-pointer ${activeDreamCategory === cat
                             ? "bg-amber-500/20 border-amber-400 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.3)]"
-                            : "bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white"
+                            : "bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 hover:bg-slate-900/40"
                             }`}
                         >
                           {cat}
@@ -514,8 +540,10 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                   )}
 
                   {filteredDreamPhotos.length === 0 ? (
-                    <div className="text-center py-12 bg-slate-900/80 rounded-xl border border-slate-800">
-                      <p className="text-neutral-400 text-sm">Nenhuma foto cadastrada nesta categoria da galeria.</p>
+                    <div className="text-center py-14 bg-slate-900/80 rounded-xl border border-dashed border-slate-700 space-y-3">
+                      <div className="text-4xl">⭐</div>
+                      <p className="text-neutral-200 font-bold font-orbitron text-sm uppercase tracking-wide">Galeria vazia</p>
+                      <p className="text-neutral-500 text-xs">Adicione fotos usando a moldura "Galeria de Sonhos" no upload.</p>
                     </div>
                   ) : (
                     <>
@@ -527,7 +555,7 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
 
                       {/* Paginação */}
                       {totalDreamPages > 1 && (
-                        <div className="flex items-center justify-between border-t border-slate-900 pt-6 mt-8">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-slate-900 pt-6 mt-8">
                           <p className="text-xs text-neutral-400">
                             Mostrando <span className="font-semibold text-neutral-200">
                               {(dreamPage - 1) * itemsPerPage + 1}
@@ -570,17 +598,19 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
               )}
 
               {activeTab === "videos" && (
-                <div>
+                <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
                   <div className="flex flex-col items-center md:items-start mb-6 pb-2 border-b border-cyan-500/25">
-                    <h2 className="text-2xl font-bold text-neutral-100 font-orbitron flex items-center gap-2 uppercase tracking-wide">
+                    <h2 className="text-xl sm:text-2xl font-bold text-neutral-100 font-orbitron flex items-center gap-2 uppercase tracking-wide">
                       🎥 Vídeos do Arthur
                     </h2>
                     <p className="text-xs text-neutral-400 mt-1">Assista aos melhores momentos no futebol</p>
                   </div>
 
                   {allVideos.length === 0 ? (
-                    <div className="text-center py-12 bg-slate-900/80 rounded-xl border border-slate-800">
-                      <p className="text-neutral-400 text-sm">Nenhum vídeo cadastrado.</p>
+                    <div className="text-center py-14 bg-slate-900/80 rounded-xl border border-dashed border-slate-700 space-y-3">
+                      <div className="text-4xl">🎬</div>
+                      <p className="text-neutral-200 font-bold font-orbitron text-sm uppercase tracking-wide">Nenhum vídeo ainda</p>
+                      <p className="text-neutral-500 text-xs">Faça upload de um vídeo na aba Início para começar.</p>
                     </div>
                   ) : (
                     <>
@@ -592,7 +622,7 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
 
                       {/* Paginação */}
                       {totalVideosPages > 1 && (
-                        <div className="flex items-center justify-between border-t border-slate-900 pt-6 mt-8">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-slate-900 pt-6 mt-8">
                           <p className="text-xs text-neutral-400">
                             Mostrando <span className="font-semibold text-neutral-200">
                               {(videosPage - 1) * itemsPerPage + 1}
@@ -608,11 +638,12 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                               size="sm"
                               disabled={videosPage === 1}
                               onClick={() => setVideosPage(videosPage - 1)}
-                              className="h-8 text-xs cursor-pointer rounded-lg border-slate-800 hover:bg-slate-900 text-neutral-300"
+                              aria-label="Página anterior"
+                              className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg cursor-pointer text-xs font-orbitron uppercase tracking-widest shadow-neon-green"
                             >
                               Anterior
                             </Button>
-                            <div className="flex items-center justify-center bg-cyan-950/40 text-cyan-300 h-8 px-3 rounded-lg text-xs font-bold border border-cyan-500/25 font-orbitron">
+                            <div className="flex items-center justify-center bg-amber-950/40 text-amber-300 h-8 px-3 rounded-lg text-xs font-bold border border-amber-500/25 font-orbitron">
                               Página {videosPage} de {totalVideosPages}
                             </div>
                             <Button
@@ -620,7 +651,8 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
                               size="sm"
                               disabled={videosPage === totalVideosPages}
                               onClick={() => setVideosPage(videosPage + 1)}
-                              className="h-8 text-xs cursor-pointer rounded-lg border-slate-800 hover:bg-slate-900 text-neutral-300"
+                              aria-label="Próxima página"
+                              className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg cursor-pointer text-xs font-orbitron uppercase tracking-widest shadow-neon-green"
                             >
                               Próxima
                             </Button>
@@ -661,7 +693,7 @@ export function DashboardContainer({ session, initialMoments }: DashboardContain
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-slate-950/80 border-t-2 border-cyan-500/40 backdrop-blur-md text-white py-6 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between shadow-lg z-10 mt-10 w-full lg:w-[85%] lg:mx-auto rounded-t-2xl">
+      <footer className="bg-slate-950/80 border-t-2 border-cyan-500/40 backdrop-blur-md text-white py-6 px-4 sm:px-6 md:px-12 flex flex-col md:flex-row items-center justify-between shadow-lg z-10 mt-10 w-full lg:w-[85%] lg:mx-auto rounded-t-2xl">
         <div className="text-center md:text-left text-xs mb-4 md:mb-0">
           <p className="font-semibold text-neutral-200">
             2026 Arthur: Guerreiro & Sonhador | Recordações com Amor

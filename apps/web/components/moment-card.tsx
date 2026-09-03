@@ -26,17 +26,17 @@ export function MomentCard({ moment, onSelect }: MomentCardProps) {
 
   if (isPolaroid) {
     // Polaroid is now "Skill Challenge" Bronze-bordered frame
-    frameWrapperClass = "bg-carbon border-2 border-amber-600/70 shadow-[0_0_15px_rgba(217,119,6,0.25)] p-3 pb-5 rounded-xl hover:shadow-[0_0_25px_rgba(217,119,6,0.45)] transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+    frameWrapperClass = "bg-carbon border-2 border-amber-600/70 shadow-[0_0_15px_rgba(217,119,6,0.25)] p-3 pb-5 rounded-xl hover:shadow-[0_0_25px_rgba(217,119,6,0.45)] transition-all duration-300 sm:hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
     titleColorClass = "text-amber-400 font-orbitron uppercase tracking-wider text-xs font-bold"
     badgeColorClass = "bg-slate-950 text-amber-400 border-amber-600/30"
   } else if (isGold) {
     // Legendary / Gold FUT card frame style
-    frameWrapperClass = "bg-carbon border-2 border-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.35)] p-3 rounded-xl hover:shadow-[0_0_30px_rgba(234,179,8,0.6)] transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+    frameWrapperClass = "bg-carbon border-2 border-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.35)] p-3 rounded-xl hover:shadow-[0_0_30px_rgba(234,179,8,0.6)] transition-all duration-300 sm:hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
     titleColorClass = "text-yellow-400 font-orbitron uppercase tracking-wider text-sm font-bold"
     badgeColorClass = "bg-slate-950 text-yellow-400 border-yellow-500/30"
   } else {
     // Soccer default (Cyber/Cyan LED frame style)
-    frameWrapperClass = "bg-carbon border-2 border-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.3)] p-3 rounded-xl hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+    frameWrapperClass = "bg-carbon border-2 border-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.3)] p-3 rounded-xl hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] transition-all duration-300 sm:hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
     titleColorClass = "text-cyan-400 font-orbitron uppercase tracking-wider text-sm font-bold"
     badgeColorClass = "bg-slate-950 text-cyan-400 border-cyan-500/30"
   }

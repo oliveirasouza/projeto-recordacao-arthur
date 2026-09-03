@@ -7,7 +7,7 @@ import { Input } from "@workspace/ui/components/input"
 import { Textarea } from "@workspace/ui/components/textarea"
 import { Label } from "@workspace/ui/components/label"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@workspace/ui/components/card"
-import { LogIn, LogOut, Upload, Loader2, Sparkles, Eye, EyeOff } from "lucide-react"
+import { LogIn, LogOut, Upload, Loader2, Sparkles, Eye, EyeOff, AlertCircle, CheckCircle2 } from "lucide-react"
 import { signIn, signOut } from "next-auth/react"
 import { compressImageClientSide } from "@/lib/image-optimizer"
 
@@ -73,9 +73,21 @@ export function UploadForm({ session, initialMoments, onUploadSuccess }: UploadF
     try {
       const formData = new FormData(e.currentTarget)
       const file = formData.get("file") as File | null
+      const title = formData.get("title") as string | null
 
-      if (file && file.size > 60 * 1024 * 1024) {
-        setLocalError("O arquivo selecionado é muito grande. O limite máximo é de 60MB.")
+      if (title) {
+        const titleExists = initialMoments.some(
+          moment => moment.title.trim().toLowerCase() === title.trim().toLowerCase()
+        )
+        if (titleExists) {
+          setLocalError(`<div class="text-base font-bold text-red-500 font-orbitron uppercase tracking-wider"> Já existe uma recordação com este título. Por favor, escolha um nome diferente. </div>`)
+          setIsCompressing(false)
+          return
+        }
+      }
+
+      if (file && file.size > 600 * 1024 * 1024) {
+        setLocalError("O arquivo selecionado é muito grande. O limite máximo é de 600MB.")
         setIsCompressing(false)
         return
       }
@@ -148,8 +160,9 @@ export function UploadForm({ session, initialMoments, onUploadSuccess }: UploadF
         <CardContent className="pt-2 pb-6 relative z-10">
           <form onSubmit={handleLocalSignIn} className="space-y-4">
             {authError && (
-              <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg text-center animate-shake">
-                {authError}
+              <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg text-center animate-shake flex items-center justify-center gap-2" role="alert">
+                <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                <span>{authError}</span>
               </div>
             )}
             <div className="space-y-1">
@@ -217,20 +230,27 @@ export function UploadForm({ session, initialMoments, onUploadSuccess }: UploadF
         <form id="add-moment-form" onSubmit={handleSubmit} className="space-y-4">
           {(localError || state?.error) && (
             localError ? (
-              <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg">
-                {localError}
-              </div>
+              localError.startsWith("<div") ? (
+                <div dangerouslySetInnerHTML={{ __html: localError }} />
+              ) : (
+                <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg flex items-start gap-2" role="alert">
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                  <span>{localError}</span>
+                </div>
+              )
             ) : state?.error?.startsWith("<div") ? (
               <div dangerouslySetInnerHTML={{ __html: state.error }} />
             ) : (
-              <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg">
-                {state?.error}
+              <div className="p-3 text-xs bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg flex items-start gap-2" role="alert">
+                <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                <span>{state?.error}</span>
               </div>
             )
           )}
           {state?.success && !localError && (
-            <div className="p-3 text-xs bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-lg">
-              Recordação adicionada com sucesso!
+            <div className="p-4 text-xs bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-lg flex flex-col items-center gap-2 animate-in fade-in duration-300">
+              <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+              <span className="font-bold font-orbitron uppercase tracking-wide text-center">Recordação adicionada!</span>
             </div>
           )}
 
@@ -245,7 +265,7 @@ export function UploadForm({ session, initialMoments, onUploadSuccess }: UploadF
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
               <Label htmlFor="date" className="text-xs font-bold text-neutral-300 font-orbitron uppercase tracking-wide">Data</Label>
               <Input
@@ -352,8 +372,8 @@ export function UploadForm({ session, initialMoments, onUploadSuccess }: UploadF
                 onChange={(e) => {
                   const file = e.target.files?.[0]
                   if (file) {
-                    if (file.size > 60 * 1024 * 1024) {
-                      setLocalError("O arquivo selecionado é muito grande. O limite máximo é de 60MB.")
+                    if (file.size > 600 * 1024 * 1024) {
+                      setLocalError("O arquivo selecionado é muito grande. O limite máximo é de 600MB.")
                       setFileName("")
                       return
                     }
@@ -392,7 +412,7 @@ export function UploadForm({ session, initialMoments, onUploadSuccess }: UploadF
           <Button
             type="submit"
             disabled={isPending || isCompressing}
-            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-lg shadow-neon-green gap-2 cursor-pointer transition-all font-orbitron uppercase tracking-widest"
+            className={`w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-lg shadow-neon-green gap-2 cursor-pointer transition-all duration-200 font-orbitron uppercase tracking-widest flex items-center justify-center hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] disabled:opacity-70 ${isPending || isCompressing ? "scale-95" : "scale-100"}`}
           >
             {isCompressing ? (
               <>
