@@ -11,8 +11,12 @@ if (!connectionString) {
 // In development, we fallback to a default local postgres connection if DATABASE_URL is not set
 const finalConnectionString = connectionString || "postgresql://postgres:postgres@localhost:5432/arthur_db"
 
+const isNeon = finalConnectionString.includes("neon.tech") || finalConnectionString.includes("sslmode=require")
+
 const pool = new Pool({
   connectionString: finalConnectionString,
+  ssl: isNeon ? { rejectUnauthorized: false } : undefined,
+  connectionTimeoutMillis: 10000,
 })
 
 // Prevent background pg pool errors from crashing the Node/Next.js process when the database is offline

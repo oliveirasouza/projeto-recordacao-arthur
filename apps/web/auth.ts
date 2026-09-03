@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials"
 
 const nextAuthResult = NextAuth({
   secret: process.env.AUTH_SECRET || "fallback-secret-for-dev-only-change-in-production",
+  trustHost: true,
   session: {
     strategy: "jwt",
   },
